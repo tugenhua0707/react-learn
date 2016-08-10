@@ -54,92 +54,88 @@
 </ol>
 <h3>一：父组件向子组件传值</h3>
 <p>代码如下：</p>
-<pre>
-// 父组件
-var ParentContainer = React.createClass({
-  getInitialState: function(){
-    return {
-      checked: true
-    }
-  },
-  render: function(){
-    return (
-      <Child text="child" checked={this.state.checked} />
+    // 父组件
+    var ParentContainer = React.createClass({
+      getInitialState: function(){
+        return {
+          checked: true
+        }
+      },
+      render: function(){
+        return (
+          <Child text="child" checked={this.state.checked} />
+        )
+      }
+    });
+    // 子组件
+    var Child = React.createClass({
+       render: function(){
+         // 从父组件获取的值
+         var checked = this.props.checked,
+             text = this.props.text;
+         return (
+            <label>{text}:<input type="checkbox" checked={checked}/></label>
+         )
+       }
+    });
+    ReactDOM.render(
+      <ParentContainer />,
+      document.getElspanentById('root')
     )
-  }
-});
-// 子组件
-var Child = React.createClass({
-   render: function(){
-     // 从父组件获取的值
-     var checked = this.props.checked,
-         text = this.props.text;
-     return (
-        <label>{text}:<input type="checkbox" checked={checked}/></label>
-     )
-   }
-});
-ReactDOM.render(
-  <ParentContainer />,
-  document.getElspanentById('root')
-)
-</pre>
 <h3>二：子组件向父组件传值</h3>
 <p>比如一个点击元素，子元素点击后，获得一个状态，然后告诉父级元素，父级元素显示出来；</p>
-<pre>
-  // 父组件
-var ParentContainer = React.createClass({
-  getInitialState: function(){
-    return {
-      checked: false
-    }
-  },
-  onChildChanged: function(newState) {
-    this.setState({
-      checked: newState
+    // 父组件
+    var ParentContainer = React.createClass({
+      getInitialState: function(){
+        return {
+          checked: false
+        }
+      },
+      onChildChanged: function(newState) {
+        this.setState({
+          checked: newState
+        });
+      },
+      render: function(){
+        var isChecked = this.state.checked ? 'yes' : 'no';
+        return (
+          <div>
+            <div>Are you checked: {isChecked}</div>
+            <Child text="child" checked={this.state.checked} callbackParent={this.onChildChanged}/>
+          </div>
+          
+        )
+      }
     });
-  },
-  render: function(){
-    var isChecked = this.state.checked ? 'yes' : 'no';
-    return (
-      <div>
-        <div>Are you checked: {isChecked}</div>
-        <Child text="child" checked={this.state.checked} callbackParent={this.onChildChanged}/>
-      </div>
-      
-    )
-  }
-});
-// 子组件
-var Child = React.createClass({
-   getInitialState: function(){
-    return {
-      checked: this.props.checked
-    }
-   },
-   onTextChange: function(){
-     var newState = !this.state.checked;
-     this.setState({
-       checked: newState
-     });
-     this.props.callbackParent(newState);
-   },
-   render: function(){
-     // 组件自身的状态数据
-     var checked = this.state.checked;
+    // 子组件
+    var Child = React.createClass({
+       getInitialState: function(){
+        return {
+          checked: this.props.checked
+        }
+       },
+       onTextChange: function(){
+         var newState = !this.state.checked;
+         this.setState({
+           checked: newState
+         });
+         this.props.callbackParent(newState);
+       },
+       render: function(){
+         // 组件自身的状态数据
+         var checked = this.state.checked;
 
-     // 从父组件获取的值
-     var text = this.props.text;
-     return (
-        <label>{text}:<input type="checkbox" checked={checked} onChange={this.onTextChange}/></label>
-     )
-   }
-});
-ReactDOM.render(
-  <ParentContainer />,
-  document.getElspanentById('root')
-)
-</pre>
+         // 从父组件获取的值
+         var text = this.props.text;
+         return (
+            <label>{text}:<input type="checkbox" checked={checked} onChange={this.onTextChange}/></label>
+         )
+       }
+    });
+    ReactDOM.render(
+      <ParentContainer />,
+      document.getElspanentById('root')
+    )
 <p>
   如上代码：默认情况下，父组件设置一个属性值为false，子元素渲染的时候，获取该属性，初步渲染checkbox框，然后
   当用户点击的时候，该属性变为true，然后调用父元素的方法，父元素的方法重新设置值，再调用render方法；把信息展示到
@@ -151,87 +147,79 @@ ReactDOM.render(
   <li>设置一个变量，调用函数，并在属性中引用它</li>
 </ol>
 <h3>1. 三元运算符</h3>
-<pre>
-  var ParentClass = React.createClass({
-    getInitialState: function(){
-      return {
-        isFalg: true
+    var ParentClass = React.createClass({
+      getInitialState: function(){
+        return {
+          isFalg: true
+        }
+      },
+      render: function(){
+        return (
+          <div className = {this.state.isFalg ? 'className' : ''}>xxxx</div>
+        )
       }
-    },
-    render: function(){
-      return (
-        <div className = {this.state.isFalg ? 'className' : ''}>xxxx</div>
-      )
-    }
-  });
-</pre>
+    });
 <h3>2. 设置一个变量，并在属性中引用它</h3>
-<pre>
-  var ParentClass = React.createClass({
-    getInitialState:function () {
-       return { isFalg: true };
-    },
-    getIsComplete:function(){
-      return this.state.isFalg ? 'is-complete' : '' ;
-    },
-    render: function () {
-      var isFalg = this.getIsComplete();
-      return(
-          <div className={ isFalg }> Hello Ivan .</div>
-      );
-    }
-  });
-</pre>
+    var ParentClass = React.createClass({
+      getInitialState:function () {
+         return { isFalg: true };
+      },
+      getIsComplete:function(){
+        return this.state.isFalg ? 'is-complete' : '' ;
+      },
+      render: function () {
+        var isFalg = this.getIsComplete();
+        return(
+            <div className={ isFalg }> Hello Ivan .</div>
+        );
+      }
+    });
 <h3>3. Mixins</h3>
 <p>不同的组件共用一些功能，共享一部分代码，React提供了mixins这种方式来处理这种问题。</p>
 <p>比如如下代码；定义一个SetIntervalMixin对象，里面包含两个方法，然后在TickTock对象内调用Mixins把SetIntervalMixin对象包含进来；就可以调用该方法，我们可以把Mixins理解成javascript中的继承即可~(类似而已)</p>
-<pre>
-  var SetIntervalMixin = {
-    componentWillMount: function(){
-      this.intervals = [];
-    },
-    setInterval: function(){
-      this.intervals.push(setInterval.apply(null,arguments));
-    }
-  };
-  var TickTock = React.createClass({
-    mixins: [SetIntervalMixin],
-    getInitialState: function(){
-      return {seconds:0};
-    },
-    componentDidMount: function(){
-      this.setInterval(this.tick,1000); // 调用SetIntervalMixin的方法
-    },
-    tick: function(){
-      this.setState({seconds:this.state.seconds + 1});
-    },
-    render: function(){
-      return (
-        <p>hello world{this.state.seconds}</p>
-      )
-    }
-  });
-  React.render(
-    <TickTock />,
-    document.getElspanentById("root")
-  )
-</pre>
+    var SetIntervalMixin = {
+      componentWillMount: function(){
+        this.intervals = [];
+      },
+      setInterval: function(){
+        this.intervals.push(setInterval.apply(null,arguments));
+      }
+    };
+    var TickTock = React.createClass({
+      mixins: [SetIntervalMixin],
+      getInitialState: function(){
+        return {seconds:0};
+      },
+      componentDidMount: function(){
+        this.setInterval(this.tick,1000); // 调用SetIntervalMixin的方法
+      },
+      tick: function(){
+        this.setState({seconds:this.state.seconds + 1});
+      },
+      render: function(){
+        return (
+          <p>hello world{this.state.seconds}</p>
+        )
+      }
+    });
+    React.render(
+      <TickTock />,
+      document.getElspanentById("root")
+    )
 <h3>4.{...obj} 来批量设置一个对象的键值</h3>
 <p>可以用通过 {...obj} 来批量设置一个对象的键值对到组件的属性，注意顺序,因为相同的属性可以被覆盖,</p>
-<pre>
-  var HelloMessage = React.createClass({
-    render: function(){
-      return (
-        <div>name: {this.props.name},age:{this.props.age}</div>
-      )
-    }
-  });
-  var user = {"name":'kongzhi',age:29};
-  React.render(
-    <HelloMessage name="override name" {...user}/>,
-    document.getElspanentById("root")
-  );
-</pre>
+    var HelloMessage = React.createClass({
+      render: function(){
+        return (
+          <div>name: {this.props.name},age:{this.props.age}</div>
+        )
+      }
+    });
+    var user = {"name":'kongzhi',age:29};
+    React.render(
+      <HelloMessage name="override name" {...user}/>,
+      document.getElspanentById("root")
+    );
 <p>
   上面定义了一个user对象，然后调用HelloMessage组件，使用{...user}设置一个对象的属性，上面可以看到
   有相同的属性name，这会涉及到覆盖的问题，比如自己定义的name属性在 设置的对象属性{...user}的后面的
@@ -244,51 +232,47 @@ ReactDOM.render(
 当组件加载到页面上之后(componentDidMount),就可以通过findDOMNode()方法
 拿到组件对应的DOM元素。如下代码：
 </p>
-<pre>
-  var Test = React.createClass({
-    componentDidMount: function(){
-      var dom = React.findDOMNode(this);
-      console.log(dom);
-    },
-    render: function(){
-      return (
-        <div>hello world</div>
-      )
-    }
-  });
-  React.render(<Test />, document.getElspanentById("root"));
-</pre>
+    var Test = React.createClass({
+      componentDidMount: function(){
+        var dom = React.findDOMNode(this);
+        console.log(dom);
+      },
+      render: function(){
+        return (
+          <div>hello world</div>
+        )
+      }
+    });
+    React.render(<Test />, document.getElspanentById("root"));
 <p>
   2. Refs
 </p>
 <p>
   另外一种方式是通过在要引用的DOM元素上设置一个ref属性指定一个名称，然后通过 this.refs.name 来访问对应的DOM元素。
 </p>
-<pre>
-  var App = React.createClass({
-    getInitialState: function(){
-      return {userInput:''};
-    },
-    handleChange: function(e){
-      this.setState({userInput:e.target.value});
-    },
-    clearAndFoucsInput: function(){
-      this.setState({userInput:''},function(){
-        console.log(this.refs.theInput.getDOMNode());// 当前点击的元素
-        this.refs.theInput.getDOMNode().focus();
-      });
-    },
-    render: function(){
-      return (
-        <div>
-          <div onClick = {this.clearAndFoucsInput}>Click to Focus And Reset</div>
-          <input ref="theInput" value={this.state.userInput} onChange={this.handleChange}/>
-        </div>
-      )
-    }
-  });
-  React.render(<App />, document.getElspanentById("root"));
-</pre>
+    var App = React.createClass({
+      getInitialState: function(){
+        return {userInput:''};
+      },
+      handleChange: function(e){
+        this.setState({userInput:e.target.value});
+      },
+      clearAndFoucsInput: function(){
+        this.setState({userInput:''},function(){
+          console.log(this.refs.theInput.getDOMNode());// 当前点击的元素
+          this.refs.theInput.getDOMNode().focus();
+        });
+      },
+      render: function(){
+        return (
+          <div>
+            <div onClick = {this.clearAndFoucsInput}>Click to Focus And Reset</div>
+            <input ref="theInput" value={this.state.userInput} onChange={this.handleChange}/>
+          </div>
+        )
+      }
+    });
+    React.render(<App />, document.getElspanentById("root"));
 <p>
   如上代码；页面有一个input框，当用户输入值的时候，点击 Click to Focus And Reset 就可以清空值；且当前的焦点
   重新聚焦；我们可以打印出console.log(this.refs.theInput.getDOMNode()); 说明是当前被点击的元素input；
@@ -296,23 +280,21 @@ ReactDOM.render(
 <h3>6. React中的类名操作 </h3>
 <p>classSet()是一个简洁的工具，用于简单操作DOM中的class字符串。</p>
 <p>下面我们不适用classSet()为元素添加类名可能如下代码：</p>
-<pre>
-  var ClassSet = React.createClass({
-    render: function(){
-      var classString = 'message';
-      if(this.props.isHello) {
-        classString += ' hello';
+    var ClassSet = React.createClass({
+      render: function(){
+        var classString = 'message';
+        if(this.props.isHello) {
+          classString += ' hello';
+        }
+        if(this.props.world) {
+          classString += ' world';
+        }
+        return (
+          <div className={classString}>hello world!!</div>
+        )
       }
-      if(this.props.world) {
-        classString += ' world';
-      }
-      return (
-        <div className={classString}>hello world!!</div>
-      )
-    }
-  });
-  React.render(<ClassSet isHello = "aa"/>, document.getElspanentById("root"));
-</pre>
+    });
+    React.render(<ClassSet isHello = "aa"/>, document.getElspanentById("root"));
 <p>
   默认div元素有message类名；如果有isHello属性的话，添加hello类名；如果有world属性的话，添加
   world类名；这样的话，看起来挺不友好的；接下来会看看一些插件的使用；
