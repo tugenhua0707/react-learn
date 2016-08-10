@@ -4,46 +4,46 @@
 <ol>
   <li>
     <span>getDefaultProps</span>
-    <em>用于组件类，只调用一次，返回对象用于设置默认的props，对于引用值，会在实例中共享。</em>
+    <span>用于组件类，只调用一次，返回对象用于设置默认的props，对于引用值，会在实例中共享。</span>
   </li>
   <li>
     <span>getInitialState</span>
-    <em>作用于组件的实例，在实例创建时调用一次，用于初始化每个实例的state，可以访问this.props</em>
+    <span>作用于组件的实例，在实例创建时调用一次，用于初始化每个实例的state，可以访问this.props</span>
   </li>
   <li>
     <span>componentWillMount</span>
-    <em>在完成首次渲染之前调用，可以修改组件state</em>
+    <span>在完成首次渲染之前调用，可以修改组件state</span>
   </li>
   <li>
     <span>render</span>
-    <em>创建虚拟dom，规则如下：</em>
+    <span>创建虚拟dom，规则如下：</span>
     <p>只能出现一个顶级组件(不能返回数组)</p>
     <p>不能改变组件的状态</p>
     <p>不能修改DOM的输出</p>
   </li>
   <li>
     <span>componentDidMount</span>
-    <em>真实的DOM被渲染出来后调用，在该方法中可通过this.getDOMNode()访问到真实的DOM元素。此时已可以使用其他类库来操作这个DOM。</em>
+    <span>真实的DOM被渲染出来后调用，在该方法中可通过this.getDOMNode()访问到真实的DOM元素。此时已可以使用其他类库来操作这个DOM。</span>
   </li>
   <li>
     <span>componentWillReceiveProps</span>
-    <em>组件接收到新的props时调用，并将其作为参数nextProps使用，此时可以更改组件props及state。</em>
+    <span>组件接收到新的props时调用，并将其作为参数nextProps使用，此时可以更改组件props及state。</span>
   </li>
   <li>
     <span>shouldComponentUpdate</span>
-    <em>组件是否应当渲染新的props或state，返回false表示跳过后续的生命周期方法</em>
+    <span>组件是否应当渲染新的props或state，返回false表示跳过后续的生命周期方法</span>
   </li>
   <li>
     <span>componentWillUpdate</span>
-    <em>接收到新的props或者state后，进行渲染之前调用，此时不允许更新props或state.</em>
+    <span>接收到新的props或者state后，进行渲染之前调用，此时不允许更新props或state.</span>
   </li>
   <li>
     <span>componentDidUpdate</span>
-    <em>完成渲染新的props或者state后调用，此时可以访问到新的DOM元素.</em>
+    <span>完成渲染新的props或者state后调用，此时可以访问到新的DOM元素.</span>
   </li>
   <li>
     <span>componentWillUnmount</span>
-    <em>组件被移除之前被调用，可以用于做一些清理工作，在componentDidMount方法中添加的所有任务都需要在该方法中撤销，比如创建的定时器或添加的事件监听器。</em>
+    <span>组件被移除之前被调用，可以用于做一些清理工作，在componentDidMount方法中添加的所有任务都需要在该方法中撤销，比如创建的定时器或添加的事件监听器。</span>
   </li>
 </ol>
 <h3>二：React组件之间的传值</h3>
@@ -81,7 +81,7 @@ var Child = React.createClass({
 });
 ReactDOM.render(
   <ParentContainer />,
-  document.getElementById('root')
+  document.getElspanentById('root')
 )
 </pre>
 <h3>二：子组件向父组件传值</h3>
@@ -137,7 +137,7 @@ var Child = React.createClass({
 });
 ReactDOM.render(
   <ParentContainer />,
-  document.getElementById('root')
+  document.getElspanentById('root')
 )
 </pre>
 <p>
@@ -213,7 +213,7 @@ ReactDOM.render(
   });
   React.render(
     <TickTock />,
-    document.getElementById("root")
+    document.getElspanentById("root")
   )
 </pre>
 <h3>4.{...obj} 来批量设置一个对象的键值</h3>
@@ -229,7 +229,7 @@ ReactDOM.render(
   var user = {"name":'kongzhi',age:29};
   React.render(
     <HelloMessage name="override name" {...user}/>,
-    document.getElementById("root")
+    document.getElspanentById("root")
   );
 </pre>
 <p>
@@ -256,7 +256,7 @@ ReactDOM.render(
       )
     }
   });
-  React.render(<Test />, document.getElementById("root"));
+  React.render(<Test />, document.getElspanentById("root"));
 </pre>
 <p>
   2. Refs
@@ -287,7 +287,7 @@ ReactDOM.render(
       )
     }
   });
-  React.render(<App />, document.getElementById("root"));
+  React.render(<App />, document.getElspanentById("root"));
 </pre>
 <p>
   如上代码；页面有一个input框，当用户输入值的时候，点击 Click to Focus And Reset 就可以清空值；且当前的焦点
@@ -311,7 +311,7 @@ ReactDOM.render(
       )
     }
   });
-  React.render(<ClassSet isHello = "aa"/>, document.getElementById("root"));
+  React.render(<ClassSet isHello = "aa"/>, document.getElspanentById("root"));
 </pre>
 <p>
   默认div元素有message类名；如果有isHello属性的话，添加hello类名；如果有world属性的话，添加
